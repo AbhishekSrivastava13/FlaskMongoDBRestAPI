@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 
 
 
@@ -18,6 +19,11 @@ def getAllDocuments():
     response = dumps(results)
     return response
 
+@app.route('/getUser/<id>', methods=['GET'])
+def getSingleUserDocument(id):
+    results = mongo.db.users.find_one({'_id': ObjectId(id)})
+    response = dumps(results)
+    return response
 
 @app.route('/addRecords', methods=['POST'])
 def addDocuments():
