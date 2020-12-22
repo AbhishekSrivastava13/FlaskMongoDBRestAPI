@@ -17,7 +17,6 @@ mongo = PyMongo(app)
 def getAllDocuments():
     results = mongo.db.users.find()
     response = dumps(results)
-    print("hello")
     return response
 
 @app.route('/getUser/<id>', methods=['GET'])
