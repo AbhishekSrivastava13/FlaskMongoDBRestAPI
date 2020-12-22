@@ -41,6 +41,24 @@ def addDocuments():
         return resp
     else:
         not_found()
+
+@app.route('/updateRecords/<id>', methods=['POST'])
+def updateDocuments(id):
+    jsonRequest = request.json
+    name = jsonRequest['name']
+    email = jsonRequest['email']
+
+    if name and email and request.method == 'POST':
+        id = mongo.db.users.update_one({'_id': ObjectId(id)},{"$set":{
+            'name': name,
+            'email': email
+        }})
+        resp = jsonify("User Updated Successfully")
+        resp.status_code = 200
+        return resp
+    else:
+        not_found()
+
 @app.errorhandler(404)
 def not_found(error=None):
     message: {
